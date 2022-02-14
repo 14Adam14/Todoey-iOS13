@@ -1,27 +1,22 @@
 
 
 import UIKit
+import CoreData
 
 class ToDoViewController: UITableViewController {
     
     
     
-    var itemArray = [Items]()
+    var itemArray = [Item]()
     
-    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+    // let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     
-    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
-        
-        print(dataFilePath)
-        
-        
+
         
         
         loadItems()
@@ -63,14 +58,20 @@ class ToDoViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         
+        context.delete(itemArray[indexPath.row])
+        itemArray.remove(at: indexPath.row)
         
-        let indexPath = tableView.indexPathForSelectedRow
         
-        itemArray[indexPath!.row].done = !itemArray[indexPath!.row].done
+        
+        
+        
+      //  let indexPath = tableView.indexPathForSelectedRow
+        
+      //  itemArray[indexPath!.row].done = !itemArray[indexPath!.row].done
         
         saveItems()
         
-        tableView.deselectRow(at: indexPath!, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
         
     }
     
@@ -89,9 +90,10 @@ class ToDoViewController: UITableViewController {
             //  what will happen once user clicks the Add Item button on our UIAlert
             
             
-            let newItem = Items()
-            newItem.title = textField.text!
             
+            let newItem = Item(context: self.context)
+            newItem.title = textField.text!
+            newItem.done = false
             
             self.itemArray.append(newItem)
             
@@ -119,13 +121,13 @@ class ToDoViewController: UITableViewController {
     
     func saveItems() {
         
-        let encoder = PropertyListEncoder()
+        
         
         do {
-            let data = try encoder.encode(itemArray)
-            try data.write(to: dataFilePath!)
+            
+           try context.save()
         } catch {
-            print("Error encoding item array \(error)")
+            print("Error saving context \(error)")
         }
         
         self.tableView.reloadData()
@@ -136,22 +138,25 @@ class ToDoViewController: UITableViewController {
     
     
     func loadItems() {
-        if let data = try? Data(contentsOf: dataFilePath!) {
-            let decoder = PropertyListDecoder()
+       
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        
+        do {
             
-            do {
-                itemArray = try decoder.decode([Items].self, from: data)
-            } catch {
-                print("Error decoding item array \(error)")
-            }
-            
-            
-            
+         itemArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from context \(error)")
         }
         
-    }
-    
-    
-    
+        
+           }
+
+
 }
+
+    
+
+    
+    
+
 
