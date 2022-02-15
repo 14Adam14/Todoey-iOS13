@@ -9,6 +9,7 @@ class ToDoViewController: UITableViewController {
     
     var itemArray = [Item]()
     
+   
     // let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -144,13 +145,6 @@ class ToDoViewController: UITableViewController {
         tableView.reloadData()
         
         }
-
-
-    
-    
-    
-   
-    
     
 }
 
