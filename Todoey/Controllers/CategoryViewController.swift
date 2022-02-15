@@ -1,24 +1,50 @@
-//
-//  CategoryViewController.swift
-//  Todoey
-//
-//  Created by user213083 on 2/15/22.
-//  Copyright © 2022 App Brewery. All rights reserved.
-//
+
 
 import UIKit
+import CoreData
 
-class CategoryViewController: UITableViewCell {
+class CategoryViewController: UITableViewController {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
-    }
+    
+    
 
+
+//MARK: - TableView Datasource Methods
+
+
+
+
+
+
+//MARK: - Data Manipulation Methods
+
+    
+    
+    
+    
+    
+//MARK: - Add New Categories
+
+    
+@IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+    
+
+}
+    
+
+    
+
+//MARK: - TableView Delegate Methods
+
+    
+    
+    
+    
+    
 }
