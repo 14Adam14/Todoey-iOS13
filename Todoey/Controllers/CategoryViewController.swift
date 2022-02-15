@@ -56,6 +56,32 @@ class CategoryViewController: UITableViewController {
     
     
     
+    
+    //MARK: - TableView Delegate Methods
+
+        
+        override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            
+            performSegue(withIdentifier: "goToItems", sender: self)
+            
+        }
+        
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! ToDoViewController
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            destinationVC.selectedCategory = category[indexPath.row]
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
+    
 
 //MARK: - Data Manipulation Methods
 
@@ -102,21 +128,21 @@ class CategoryViewController: UITableViewController {
 @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
     
     
-    let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
+    let alert = UIAlertController(title: "Add New Category", message: "", preferredStyle: .alert)
     
     var textField = UITextField()
     
-    let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+    let action = UIAlertAction(title: "Add Category", style: .default) { (action) in
         //  what will happen once user clicks the Add Item button on our UIAlert
         
         
         
-        let newItem = Category(context: self.context)
-        newItem.name = textField.text!
+        let newCategory = Category(context: self.context)
+        newCategory.name = textField.text!
         
         
-        self.category.append(newItem)
-        
+        self.category.append(newCategory)
+
         self.saveItems()
         
     }
@@ -136,18 +162,7 @@ class CategoryViewController: UITableViewController {
 
     
 
-//MARK: - TableView Delegate Methods
 
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
-        saveItems()
-        
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-    }
-    
 
 
 
