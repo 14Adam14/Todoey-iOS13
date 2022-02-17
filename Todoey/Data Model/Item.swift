@@ -11,3 +11,7 @@ class Item: Object {
     
     var parentCategory = LinkingObjects(fromType: Category.self, property: "items")
 }
+
+
+
+
