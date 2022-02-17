@@ -21,10 +21,7 @@ class ToDoViewController: SwipeTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
-        tableView.rowHeight = 80.0
-
+    
         
     }
     
@@ -34,25 +31,7 @@ class ToDoViewController: SwipeTableViewController {
         return todoItems?.count ?? 1
     }
     
-    
-    
-    
-    
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//
-//
-//        let cell = super.tableView(tableView, cellForRowAt: indexPath)
-//
-//        cell.textLabel?.text = category?[indexPath.row].name ?? "No Categories Added yet"
-//
-//
-//        return cell
-//    }
-//
-    
-    
-    
-    
+
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
