@@ -3,7 +3,7 @@
 import UIKit
 import RealmSwift
 
-class ToDoViewController: UITableViewController {
+class ToDoViewController: SwipeTableViewController {
     
     
     
@@ -22,6 +22,10 @@ class ToDoViewController: UITableViewController {
         super.viewDidLoad()
         
         
+        
+        tableView.rowHeight = 80.0
+
+        
     }
     
     //MARK: - TableView Datasourse Methods
@@ -32,14 +36,34 @@ class ToDoViewController: UITableViewController {
     
     
     
+    
+    
+//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//
+//
+//        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+//
+//        cell.textLabel?.text = category?[indexPath.row].name ?? "No Categories Added yet"
+//
+//
+//        return cell
+//    }
+//
+    
+    
+    
+    
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
         
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
+        // let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
         
         
+      
         if let item = todoItems?[indexPath.row] {
             
             cell.textLabel?.text = item.title
@@ -140,7 +164,37 @@ class ToDoViewController: UITableViewController {
         
     }
     
+
+
+
+//MARK: - Delete Data
+    
+
+
+
+    
+    override func updateModel(at IndexPath: IndexPath) {
+        
+        
+        if let itemForDeletion = self.todoItems?[IndexPath.row] {
+            
+            do {
+                try  self.realm.write {
+                    self.realm.delete(itemForDeletion)
+                }
+            } catch {
+                print("Error deleting category, \(error)")
+            }
+            
+            
+            
+        }
+        
+    }
+
+
 }
+
 
 //MARK: - Search Bar Methods
 
